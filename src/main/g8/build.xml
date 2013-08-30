@@ -84,10 +84,8 @@
 	<target name="copy-src" depends="clean-src">
 		<!-- Copy sources -->
 		<copy todir="\${mcpsrc.dir}/minecraft" verbose="true">
-			<fileset dir="\${src.dir}"/>
-			<filterset>
-				<filter token="VERSION" value="\${project.complete.version}" />
-			</filterset>
+			<fileset dir="\${src.dir}" includes="**/*"/>
+
 		</copy>
 	</target>
 
