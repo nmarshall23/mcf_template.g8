@@ -1,0 +1,14 @@
+[
+{
+  "modid": "$name;format="normalize"$",
+  "name": "$name;format="capitalize"$",
+  "description": "$description$",
+  "version": "0.0.1",
+  "mcversion": "1.6.2",
+  "updateUrl": "",
+  "authors": ["$author$"],
+  "parent": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
