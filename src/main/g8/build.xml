@@ -2,13 +2,7 @@
 <!-- Great ant build file from BuildCraft -->
 	<property environment="env"/>
 	<!-- Project Properties -->
-
-	<property name="mc.version" value="$mcversion$"/>
-	<property name="forge.version" value="9.10.0.842"/>
-	
-	<property name="project.name" value="$name;format="camel"$" />
-	<property name="project.srcdir" value="$name;format="normalize"$" />
-	<property name="project.version" value="0.0.1" />
+	<loadproperties srcFile="project.properties"/>
 
 
 	<!-- Ant build script Properties -->
@@ -19,7 +13,7 @@
 	<property name="src.dir" value="src/main"/>
 	<property name="resources.dir" value="src/resources"/>
 
-	<property name="forge.name" value="minecraftforge-src-\${mc.version}-\${forge.version}.zip"/>
+	<property name="forge.name" value="minecraftforge-src-\${minecraft.version}-\${forge.version}.zip"/>
 
 	<property name="jar.dir" value="bin"/>
 	<property name="forge.dir" value="\${build.dir}/forge"/>
@@ -37,9 +31,27 @@
 		</not>
 	</condition>
 
+	<condition property="jar.file.name" value="\${jar.dir}/\${project.name}-\${minecraft.version}-\${project.version}.jar" else="\${jar.dir}/\${project.name}-\${minecraft.version}-\${project.version}.jar">
+			<isset property="forge-long-name"/>
+	</condition>
+
+	<condition property="os.minecraft.data.path" value="\${env.HOME}" else="\${env.APPDATA}">
+		<os family="unix" />
+	</condition>
+	
+
+	<property name="mod.install.path" value="\${os.minecraft.data.path}/${minecraft.data.dir}" />
+                  
+	<!-- Targets -->
+	
+	<!-- copies modjar to minecraft savegame dir -->
+	<target name="installmod" depends="package">
+		<copy file="\${jar.file.name}" todir="\${mod.install.path}/mods"/>
+	</target>
+
+
 	<mkdir dir="\${download.dir}"/>
 
-	<!-- Targets -->
 
 	<!-- Clear build directory -->
 	<target name="clean">
@@ -65,10 +77,14 @@
 
 		<!-- Install forge -->
 		<exec dir="\${forge.dir}" executable="cmd" osfamily="windows">
+			<env key="SCALA_HOME" value="\${scala.home}"/>
+			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
 			<arg line="/c install.cmd"/>
 		</exec>
 
 		<exec dir="\${forge.dir}" executable="sh" osfamily="unix">
+			<env key="SCALA_HOME" value="\${scala.home}"/>
+			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
 			<arg value="install.sh"/>
 		</exec>
 
@@ -98,10 +114,14 @@
 
 		<!-- Recompile -->
 		<exec dir="\${mcp.dir}" executable="cmd" osfamily="windows">
+			<env key="SCALA_HOME" value="\${scala.home}"/>
+			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
 			<arg line="/c recompile.bat"/>
 		</exec>
 
 		<exec dir="\${mcp.dir}" executable="sh" osfamily="unix">
+			<env key="SCALA_HOME" value="\${scala.home}"/>
+			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
 			<arg value="recompile.sh"/>
 		</exec>
 
@@ -118,10 +138,14 @@
 
 		<!-- Reobfuscate -->
 		<exec dir="\${mcp.dir}" executable="cmd" osfamily="windows">
+			<env key="SCALA_HOME" value="\${scala.home}"/>
+			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
 			<arg line="/c reobfuscate_srg.bat"/>
 		</exec>
 
 		<exec dir="\${mcp.dir}" executable="sh" osfamily="unix">
+			<env key="SCALA_HOME" value="\${scala.home}"/>
+			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
 			<arg value="reobfuscate_srg.sh"/>
 		</exec>
 
@@ -157,10 +181,7 @@
 		<delete includeemptydirs="true">
 			<fileset dir="\${jar.dir}" includes="**/*"/>
 		</delete>
-		<condition property="jar.file.name" value="\${jar.dir}/\${project.name}-\${mc.version}-\${project.version}.jar" else="\${jar.dir}/\${project.name}-\${mc.version}-\${project.version}.jar">
-			<isset property="forge-long-name"/>
-		</condition>
-		
+	
 		<jar destfile="\${jar.file.name}" basedir="\${classes.dir}"/>
 
 	</target>
@@ -169,10 +190,14 @@
 
 		<!-- Start Client -->
 		<exec dir="\${mcp.dir}" executable="cmd" osfamily="windows">
+			<env key="SCALA_HOME" value="\${scala.home}"/>
+			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
 			<arg line="/c startclient.bat"/>
 		</exec>
 
 		<exec dir="\${mcp.dir}" executable="sh" osfamily="unix">
+			<env key="SCALA_HOME" value="\${scala.home}"/>
+			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
 			<arg value="startclient.sh"/>
 		</exec>
 
