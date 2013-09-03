@@ -40,13 +40,13 @@
 	</condition>
 	
 
-	<property name="mod.install.path" value="\${os.minecraft.data.path}/${minecraft.data.dir}" />
+	<property name="mod.install.path" value="\${os.minecraft.data.path}/\${minecraft.data.dir}" />
 
 	<condition property="isset.scala.home" value="\${scala.home}" else="\${env.SCALA_HOME}" >
-		<isset property="${scala.home}" />
+		<isset property="\${scala.home}" />
 	</condition>
 	<condition property="isset.scala.path" value="\${scala.home}/bin:\${env.PATH}" else="\${env.PATH}" >
-		<isset property="${scala.home}" />
+		<isset property="\${scala.home}" />
 	</condition>
 
 	<!-- Targets -->
