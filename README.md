@@ -3,6 +3,8 @@ mcf_template.g8
 
 A giter8 template for writing a Minecraft Forge Template.
 
+Requires scala version 2.11.0+
+
 Usage
 -----
 
