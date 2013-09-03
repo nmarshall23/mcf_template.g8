@@ -41,9 +41,16 @@
 	
 
 	<property name="mod.install.path" value="\${os.minecraft.data.path}/${minecraft.data.dir}" />
-                  
+
+	<condition property="isset.scala.home" value="\${scala.home}" else="\${env.SCALA_HOME}" >
+		<isset property="${scala.home}" />
+	</condition>
+	<condition property="isset.scala.path" value="\${scala.home}/bin:\${env.PATH}" else="\${env.PATH}" >
+		<isset property="${scala.home}" />
+	</condition>
+
 	<!-- Targets -->
-	
+
 	<!-- copies modjar to minecraft savegame dir -->
 	<target name="installmod" depends="package">
 		<copy file="\${jar.file.name}" todir="\${mod.install.path}/mods"/>
@@ -77,14 +84,14 @@
 
 		<!-- Install forge -->
 		<exec dir="\${forge.dir}" executable="cmd" osfamily="windows">
-			<env key="SCALA_HOME" value="\${scala.home}"/>
-			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
+			<env key="SCALA_HOME" value="\${isset.scala.home}"/>
+			<env key="PATH" value="\${isset.scala.path}"/>
 			<arg line="/c install.cmd"/>
 		</exec>
 
 		<exec dir="\${forge.dir}" executable="sh" osfamily="unix">
-			<env key="SCALA_HOME" value="\${scala.home}"/>
-			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
+			<env key="SCALA_HOME" value="\${isset.scala.home}"/>
+			<env key="PATH" value="\${isset.scala.path}"/>
 			<arg value="install.sh"/>
 		</exec>
 
@@ -114,14 +121,14 @@
 
 		<!-- Recompile -->
 		<exec dir="\${mcp.dir}" executable="cmd" osfamily="windows">
-			<env key="SCALA_HOME" value="\${scala.home}"/>
-			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
+			<env key="SCALA_HOME" value="\${isset.scala.home}"/>
+			<env key="PATH" value="\${isset.scala.path}"/>
 			<arg line="/c recompile.bat"/>
 		</exec>
 
 		<exec dir="\${mcp.dir}" executable="sh" osfamily="unix">
-			<env key="SCALA_HOME" value="\${scala.home}"/>
-			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
+			<env key="SCALA_HOME" value="\${isset.scala.home}"/>
+			<env key="PATH" value="\${isset.scala.path}"/>
 			<arg value="recompile.sh"/>
 		</exec>
 
@@ -138,14 +145,14 @@
 
 		<!-- Reobfuscate -->
 		<exec dir="\${mcp.dir}" executable="cmd" osfamily="windows">
-			<env key="SCALA_HOME" value="\${scala.home}"/>
-			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
+			<env key="SCALA_HOME" value="\${isset.scala.home}"/>
+			<env key="PATH" value="\${isset.scala.path}"/>
 			<arg line="/c reobfuscate_srg.bat"/>
 		</exec>
 
 		<exec dir="\${mcp.dir}" executable="sh" osfamily="unix">
-			<env key="SCALA_HOME" value="\${scala.home}"/>
-			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
+			<env key="SCALA_HOME" value="\${isset.scala.home}"/>
+			<env key="PATH" value="\${isset.scala.path}"/>
 			<arg value="reobfuscate_srg.sh"/>
 		</exec>
 
@@ -190,14 +197,14 @@
 
 		<!-- Start Client -->
 		<exec dir="\${mcp.dir}" executable="cmd" osfamily="windows">
-			<env key="SCALA_HOME" value="\${scala.home}"/>
-			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
+			<env key="SCALA_HOME" value="\${isset.scala.home}"/>
+			<env key="PATH" value="\${isset.scala.path}"/>
 			<arg line="/c startclient.bat"/>
 		</exec>
 
 		<exec dir="\${mcp.dir}" executable="sh" osfamily="unix">
-			<env key="SCALA_HOME" value="\${scala.home}"/>
-			<env key="PATH" value="\${scala.home}/bin:\${env.PATH}"/>
+			<env key="SCALA_HOME" value="\${isset.scala.home}"/>
+			<env key="PATH" value="\${isset.scala.path}"/>
 			<arg value="startclient.sh"/>
 		</exec>
 
