@@ -1,9 +1,8 @@
 package $name;format="lower,snake"$
 
 import cpw.mods.fml.common.Mod
-import cpw.mods.fml.common.Mod.Init
-import cpw.mods.fml.common.Mod.PostInit
-import cpw.mods.fml.common.Mod.PreInit
+import cpw.mods.fml.common.SidedProxy
+import cpw.mods.fml.common.Mod.EventHandler
 import cpw.mods.fml.common.event.FMLInitializationEvent
 import cpw.mods.fml.common.event.FMLPostInitializationEvent
 import cpw.mods.fml.common.event.FMLPreInitializationEvent
@@ -15,19 +14,21 @@ import net.minecraftforge.common.Configuration
 @NetworkMod(clientSideRequired=true, serverSideRequired=false)
 object $mainclass$ {
         
-        
+
+   @SidedProxy(clientSide="$name;format="lower,snake"$.client.ClientProxy", serverSide="$name;format="lower,snake"$.CommonProxy")
+   var proxy:CommonProxy = null;
  
-   @PreInit
+   @EventHandler
    def preInit(event: FMLPreInitializationEvent) {
 
    }
         
-   @Init
+   @EventHandler
    def init(event: FMLInitializationEvent) {
 
    }
         
-   @PostInit
+   @EventHandler
    def postInit(event:FMLPostInitializationEvent) {
                 
    }
