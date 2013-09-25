@@ -55,7 +55,35 @@
 	   </resourceexists>
 	</condition>
 
-	<!-- Targets -->
+<!-- Plugins   -->
+
+
+
+<!-- Targets -->
+
+	<target name="SetupEclipseProject">
+	<taskdef name="eclipse" classname="prantl.ant.eclipse.EclipseTask" 
+	     classpath="\${build.dir}/antlibs/ant-eclipse-1.0-jvm1.2.jar" />
+		<eclipse>
+			 <buildSpec>
+                	<buildCommand>
+                        	<name>org.scala-ide.sdt.core.scalabuilder</name>
+                        	<arguments>
+                        	</arguments>
+                	</buildCommand>
+        		</buildSpec>
+        		<natures>
+                		<nature>org.scala-ide.sdt.core.scalanature</nature>
+                		<nature>org.eclipse.jdt.core.javanature</nature>
+        		</natures>
+      			<project />
+	      		<classpath>
+	        		<source path="src/main" />
+	        		<output path="\${classes.dir}" />
+      			</classpath>
+		</eclipse>
+
+	</target>
 
 	<!-- copies modjar to minecraft savegame dir -->
 	<target name="installmod" depends="package">
